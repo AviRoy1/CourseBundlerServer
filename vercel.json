@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "coursebundlerserver",
+  "builds": [{ "src": "server.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "/server.js" }]
+}
