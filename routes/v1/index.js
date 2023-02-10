@@ -79,8 +79,6 @@ router.post('/addtoplaylist', isAuthenticated,addToPlaylist);
 router.put('/removefromplaylist', isAuthenticated,removeFromPlaylist);
 
 
-
-
 //  Admin Routers
 router.get('/admin/getalluser', isAuthenticated,authorizeAdmin,getAllUser);   //  get all users
 router.put('/admin/user/:id', isAuthenticated,authorizeAdmin,updateUserRole);   // Chnage user role

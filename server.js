@@ -24,6 +24,12 @@ cloudinary.v2.config({
 });
 
 app.use('/api',apiRouter);
+app.get("/", (req,res)=>{
+    res.send(
+        `<h1>Site is working. click <a href=${process.env.FRONTEND_URL}>
+            here</a> to visit frontend.`
+    )
+})
 
 export const instance = new Razorpay({
     key_id: process.env.RAZORPAY_API_KEY,
