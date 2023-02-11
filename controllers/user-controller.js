@@ -6,8 +6,8 @@ import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
 import Course from "../model/Course-model.js";
 import cloudinary from "cloudinary";
-import getDataUri from "../utils/dataUri.js";
 import Stats from "../model/stats.js";
+import getDataUri from "../utils/datauri.js";
 
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -20,7 +20,7 @@ export const register = catchAsyncError(async (req, res, next) => {
 
   if (user) return next(new ErrorHandler("User Already Exist", 409));
 
-  const fileUri = getDataUri(file);
+  const fileUri = getDataUri(file); //dndn
   const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
 
   user = await User.create({
