@@ -11,20 +11,21 @@ import { createCourse,
 
 
 import { 
-    createUser,
-    loginUser,
-    logout,
-    getMyProfile,
-    changePassword,
-    updateProfile,
-    updateProfilepicture,
-    forgetPassword,
-    resetPassword,
     addToPlaylist,
-    removeFromPlaylist,
-    getAllUser,
-    updateUserRole,
-    deleteUser,
+  changePassword,
+  deleteMyProfile,
+  deleteUser,
+  forgetPassword,
+  getAllUsers,
+  getMyProfile,
+  login,
+  logout,
+  register,
+  removeFromPlaylist,
+  resetPassword,
+  updateProfile,
+  updateprofilepicture,
+  updateUserRole,
 } from '../../controllers/user-controller.js';
 
 
@@ -66,13 +67,13 @@ router.delete('/deletelecture' ,isAuthenticated,authorizeAdmin,deleteLecture)   
 
 
 //  ALL APIs for users
-router.post('/register', singleUpload,createUser);
-router.post('/login',loginUser);
+router.post('/register', singleUpload,register);
+router.post('/login',login);
 router.get('/logout', logout);
 router.get('/me', isAuthenticated,getMyProfile);
 router.put('/changepassword', isAuthenticated,changePassword);
 router.put('/updateprofile', isAuthenticated,updateProfile);
-router.put('/updateprofilepicture', isAuthenticated,singleUpload,updateProfilepicture);
+router.put('/updateprofilepicture', isAuthenticated,singleUpload,updateprofilepicture);
 router.post('/forgetpassword', forgetPassword);
 router.put('/resetpassword/:token', resetPassword); 
 router.post('/addtoplaylist', isAuthenticated,addToPlaylist);
@@ -80,7 +81,7 @@ router.put('/removefromplaylist', isAuthenticated,removeFromPlaylist);
 
 
 //  Admin Routers
-router.get('/admin/getalluser', isAuthenticated,authorizeAdmin,getAllUser);   //  get all users
+router.get('/admin/getalluser', isAuthenticated,authorizeAdmin,getAllUsers);   //  get all users
 router.put('/admin/user/:id', isAuthenticated,authorizeAdmin,updateUserRole);   // Chnage user role
 router.delete('/admin/user/:id', isAuthenticated,authorizeAdmin,deleteUser);    //  delete user
 
