@@ -13,7 +13,6 @@ import { createCourse,
 import { 
     addToPlaylist,
   changePassword,
-  deleteMyProfile,
   deleteUser,
   forgetPassword,
   getAllUsers,
