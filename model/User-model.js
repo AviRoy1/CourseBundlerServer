@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
         id: String,
         status: String,
     },
-    avater: {
+    avatar: {
         public_id: {
             type: String,
             require: true, 
