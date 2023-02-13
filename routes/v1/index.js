@@ -1,6 +1,6 @@
 import express from 'express';
 import { createCourse,
-        getCourse,
+        getAllCourses,
         getCourseLectures,
         addCourseLectures,
         deleteCourse,
@@ -53,7 +53,7 @@ const router = express.Router();
 
 //  ALL APIs for Course.
 router.post('/createcourse', isAuthenticated,authorizeAdmin,singleUpload,createCourse);     // create new course  - only admin
-router.get('/getallcourse', isAuthenticated,getCourse);     // get all course without lectures
+router.get('/getallcourse', isAuthenticated,getAllCourses);     // get all course without lectures
 router.get('/course/:id', isAuthenticated,authorizeSubscribers,getCourseLectures);   // get all lectures of a particular course
 router.post('/course/:id', isAuthenticated,authorizeAdmin,singleUpload,addCourseLectures) // add course lectures  - only admin
 router.delete('/course/:id', isAuthenticated,authorizeAdmin,deleteCourse);    // Delete course  -  admin only

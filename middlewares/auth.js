@@ -13,6 +13,7 @@ export const isAuthenticated = catchAsyncError(
         }
         const decoded = jwt.verify(token,'kfqifqfn217184ajfaaf9');
         req.user = await User.findById(decoded._id);
+        // console.log(req.user.name);
         next();
     }
 );

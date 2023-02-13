@@ -102,17 +102,18 @@ export const changePassword = catchAsyncError(async (req, res, next) => {
 
 export const updateProfile = catchAsyncError(async (req, res, next) => {
   const { name, email } = req.body;
-
+  console.log(name);
   const user = await User.findById(req.user._id);
-
-  if (name) user.name = name;
-  if (email) user.email = email;
+  console.log(user.name)
+  
+  if(name)  user.name = name;
+  if(email)   user.email = email;
 
   await user.save();
 
   res.status(200).json({
     success: true,
-    message: "Profile Updated Successfully",
+    message: "Successfully Update Profile",
   });
 });
 

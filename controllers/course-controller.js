@@ -36,27 +36,25 @@ export const createCourse = catchAsyncError(
     }
 )
 
-export const getCourse = catchAsyncError(
-    async (req,res,next) => {
-      const keyword = req.query.keyWord || "";
-      const category = req.query.category || "";
+export const getAllCourses = catchAsyncError(async (req, res, next) => {
+  const keyword = req.query.keyword || "";
+  const category = req.query.category || "";
 
-        const result = await Course.find({
-          title: {
-            $regex: keyword,
-            $option: "i",
-          },
-          category: {
-            $regex: category,
-            $option: "i",
-          }
-        }).select("-lectures");
-        return res.status(200).json({
-            success: true,
-            data: result,
-        });
-    }
-);
+  const courses = await Course.find({
+    title: {
+      $regex: keyword,
+      $options: "i",
+    },
+    category: {
+      $regex: category,
+      $options: "i",
+    },
+  }).select("-lectures");
+  res.status(200).json({
+    success: true,
+    courses,
+  });
+});
 
 
 export const getCourseLectures = catchAsyncError(
