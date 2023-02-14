@@ -76,7 +76,7 @@ router.put('/updateprofilepicture', isAuthenticated,singleUpload,updateprofilepi
 router.post('/forgetpassword', forgetPassword);
 router.put('/resetpassword/:token', resetPassword); 
 router.post('/addtoplaylist', isAuthenticated,addToPlaylist);
-router.put('/removefromplaylist', isAuthenticated,removeFromPlaylist);
+router.delete('/removefromplaylist', isAuthenticated,removeFromPlaylist);
 
 
 //  Admin Routers
