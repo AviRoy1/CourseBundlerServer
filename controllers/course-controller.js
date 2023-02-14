@@ -69,7 +69,7 @@ export const getCourseLectures = catchAsyncError(
 
         res.status(200).json({
             success: true,
-            courses: course.lectures,
+            lectures: course.lectures,
         })
 
     }
