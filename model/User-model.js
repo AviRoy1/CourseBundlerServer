@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
             require: true,
         },
     },
-    playList: [
+    playlist: [
         {
             course: {
                 type: mongoose.Schema.Types.ObjectId,
