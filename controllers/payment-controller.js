@@ -85,31 +85,36 @@ export const getRazorpayKey = catchAsyncError(
 export const cancelSubscription = catchAsyncError(
     async(req,res,next) => {
 
-        const user = await User.findById(req.user._id);
-        const subscriptionId = user.subscription.id;
-        let refund = false;
-        
-        await instance.subscriptions.cancel(subscriptionId);
-        const payment = await Payment.findOne({
-            razorpay_payment_id: subscriptionId,
-        });
+      const user = await User.findById(req.user._id);
 
-        const gap = Date.now() - payment.createdAt;
-        const refundTime = process.env.REFUND_DAYS *24*60*60*1000;
-        if(refundTime > gap) {
-            refund = true;
-            await instance.payment.refund(payment.razorpay_payment_id);
-        }
-        await payment.remove();
-        user.subscription.id=undefined;
-        user.subscription.status=undefined;
-        await user.save();
-
-        res.status(200).json({
-            success: true,
-            message: 
-                refund ? "Subscription Cancellled, you will receipt full refund."
-                        : "Subscription Cancellled",
-        })
+      const subscriptionId = user.subscription.id;
+      let refund = false;
+    
+      await instance.subscriptions.cancel(subscriptionId);
+    
+      const payment = await Payment.findOne({
+        razorpay_subscription_id: subscriptionId,
+      });
+    
+      const gap = Date.now() - payment.createdAt;
+    
+      const refundTime = process.env.REFUND_DAYS * 24 * 60 * 60 * 1000;
+    
+      if (refundTime > gap) {
+        await instance.payments.refund(payment.razorpay_payment_id);
+        refund = true;
+      }
+    
+      await payment.remove();
+      user.subscription.id = undefined;
+      user.subscription.status = undefined;
+      await user.save();
+    
+      res.status(200).json({
+        success: true,
+        message: refund
+          ? "Subscription cancelled, You will receive full refund within 7 days."
+          : "Subscription cancelled, Now refund initiated as subscription was cancelled after 7 days.",
+      });
     }
 );

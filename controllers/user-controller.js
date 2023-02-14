@@ -211,7 +211,7 @@ export const addToPlaylist = catchAsyncError(async (req, res, next) => {
     course: course._id,
     poster: course.poster.url,
   });
-
+ 
   await user.save();
 
   res.status(200).json({
