@@ -1,10 +1,10 @@
 import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../utils/errorHandler.js";
-import User from '../model/User-model.js'
+import User from "../model/User-model.js";
 import { sendToken } from "../utils/sendToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
-import Course from "../model/Course-model.js";
+import { Course } from "../model/Course-model.js";
 import cloudinary from "cloudinary";
 import Stats from "../model/stats.js";
 import getDataUri from "../utils/datauri.js";
@@ -12,7 +12,7 @@ import getDataUri from "../utils/datauri.js";
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
   const file = req.file;
- 
+
   if (!name || !email || !password || !file)
     return next(new ErrorHandler("Please enter all field", 400));
 
@@ -20,9 +20,9 @@ export const register = catchAsyncError(async (req, res, next) => {
 
   if (user) return next(new ErrorHandler("User Already Exist", 409));
 
-    const fileuri = getDataUri(file);
+  const fileuri = getDataUri(file);
 
-    const myCloud = await cloudinary.v2.uploader.upload(fileuri.content);
+  const myCloud = await cloudinary.v2.uploader.upload(fileuri.content);
 
   user = await User.create({
     name,
@@ -104,10 +104,10 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
   const { name, email } = req.body;
   console.log(name);
   const user = await User.findById(req.user._id);
-  console.log(user.name)
-  
-  if(name)  user.name = name;
-  if(email)   user.email = email;
+  console.log(user.name);
+
+  if (name) user.name = name;
+  if (email) user.email = email;
 
   await user.save();
 
@@ -196,7 +196,7 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
 
 export const addToPlaylist = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
- 
+
   const course = await Course.findById(req.body.id);
 
   if (!course) return next(new ErrorHandler("Invalid Course Id", 404));
@@ -211,7 +211,7 @@ export const addToPlaylist = catchAsyncError(async (req, res, next) => {
     course: course._id,
     poster: course.poster.url,
   });
- 
+
   await user.save();
 
   res.status(200).json({
